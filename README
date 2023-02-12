@@ -1,3 +1,0 @@
-RUN sql client
-RUN mongodb client
-kubectl apply (auth gateway converter)/manifest/.
