@@ -12,6 +12,15 @@ server.config["MYSQL_PASSWORD"] = os.environ.get("MYSQL_PASSWORD")
 server.config["MYSQL_DB"] = os.environ.get("MYSQL_DB")
 server.config["MYSQL_PORT"] = int(os.environ.get("MYSQL_PORT"))
 
+@server.route('/alive')
+def alive():
+    # Check if alive
+    return "I'm alive!"
+
+@server.route('/health')
+def health():
+    # health check
+    return "OK"
 
 @server.route("/login", methods=["POST"])
 def login():

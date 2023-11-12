@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: converter
-          image: kapersoon/converter_1.0
+          image: kapersoon/converter_2.0
           envFrom:
             - configMapRef:
                 name: converter-configmap

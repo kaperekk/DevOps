@@ -3,9 +3,10 @@ from pymongo import MongoClient
 import gridfs
 from convert import to_mp3
 
+MONGO_PORT = os.environ.get('MONGO_PORT')
 
 def main():
-    client = MongoClient("host.minikube.internal", 27017)
+    client = MongoClient("host.minikube.internal", MONGO_PORT)
     db_videos = client.videos
     db_mp3s = client.mp3s
     # gridfs for larger files

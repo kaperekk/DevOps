@@ -6,11 +6,13 @@ from auth_svc import access
 from storage import util
 from bson.objectid import ObjectId
 
+MONGO_PORT = os.environ.get('MONGO_PORT')
+
 server = Flask(__name__)
 
-mongo_video = PyMongo(server, uri="mongodb://host.minikube.internal:27017/videos")
+mongo_video = PyMongo(server, uri=f"mongodb://host.minikube.internal:{MONGO_PORT}/videos")
 
-mongo_mp3 = PyMongo(server, uri="mongodb://host.minikube.internal:27017/mp3s")
+mongo_mp3 = PyMongo(server, uri=f"mongodb://host.minikube.internal:{MONGO_PORT}/mp3s")
 
 fs_videos = gridfs.GridFS(mongo_video.db)
 fs_mp3s = gridfs.GridFS(mongo_mp3.db)
@@ -18,6 +20,15 @@ fs_mp3s = gridfs.GridFS(mongo_mp3.db)
 connection = pika.BlockingConnection(pika.ConnectionParameters("rabbitmq"))
 channel = connection.channel()
 
+@server.route('/alive')
+def alive():
+    # Check if alive
+    return "I'm alive!"
+
+@server.route('/health')
+def health():
+    # health check
+    return "OK"
 
 @server.route("/login", methods=["POST"])
 def login():
@@ -27,7 +38,6 @@ def login():
         return token
     else:
         return err
-
 
 @server.route("/upload", methods=["POST"])
 def upload():
